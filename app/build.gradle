@@ -18,10 +18,19 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    signingConfigs {
+        release {
+            storeFile       file(System.getenv('SIGNING_KEYSTORE')          ?: '../HelloWorld.keystore')
+            keyAlias        System.getenv('SIGNING_KEYSTORE_KEY_ALIAS')     ?: 'helloworld'
+            keyPassword     System.getenv('SIGNING_KEYSTORE_KEY_PASSWORD')  ?: 'password'
+            storePassword   System.getenv('SIGNING_KEYSTORE_PASSWORD')      ?: 'password'
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
